@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import ClientInfo from "./Information"
 import MergeInfo from "./merge-client";
-import 
+
 
 function ClientDetails() {
   const location = useLocation();
