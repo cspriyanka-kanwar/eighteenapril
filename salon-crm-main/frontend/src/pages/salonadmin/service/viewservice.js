@@ -161,22 +161,7 @@ const ViewServices = () => {
             <h3 className="text-lg font-semibold text-gray-700">Filter Services</h3>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiSearch className="text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search services..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                  className="pl-10 w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-            </div>
+      
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
@@ -206,17 +191,47 @@ const ViewServices = () => {
                 <option value="inactive">Inactive</option>
               </select>
             </div>
-            
-            <div className="flex items-end gap-2">
-              <button
-                onClick={resetFilters}
-                className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors"
-              >
-                Reset Filters
-              </button>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FiSearch className="text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search services..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  className="pl-10 w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
             </div>
-          </div>
-        </div>
+            </div>
+            
+  
+  {/* ON/OFF Toggle Button */}
+  <div className="flex flex-col justify-end">
+    <label className="block text-sm font-medium text-gray-700 mb-1">Category of Service</label>
+    <button
+      onClick={() =>
+        setFilters((prev) => ({
+          ...prev,
+          status: prev.status === "active" ? "inactive" : "active",
+        }))
+      }
+      className={`w-full px-4 py-2 rounded-full font-semibold border transition-colors duration-200 ${
+        filters.status === "active"
+          ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
+          : "bg-white text-blue-600 border-blue-600 hover:bg-blue-50"
+      }`}
+    >
+      {filters.status === "active" ? "ON" : "OFF"}
+    </button>
+  </div>
+
+ 
+</div>
 
         {/* Services List */}
         {loading ? (
@@ -284,6 +299,7 @@ const ViewServices = () => {
           </div>
         )}
       </div>
+    
     </SAAdminLayout>
   );
 };
