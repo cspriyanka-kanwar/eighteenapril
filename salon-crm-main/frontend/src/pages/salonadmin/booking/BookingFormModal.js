@@ -44,6 +44,9 @@ const BookingFormModal = ({
   const staffList = [
     { _id: "64f1a2b3c4d5e6f7a8b9c0d3", name: "Emily Davis" },
     { _id: "64f1a2b3c4d5e6f7a8b9c0d4", name: "John Doe" },
+    { _id: "64f1a2b3c4d5e6f7a8b9c0d5", name: "Jane Smith" },
+    { _id: "64f1a2b3c4d5e6f7a8b9c0d6", name: "Michael Brown" },
+    { _id: "64f1a2b3c4d5e6f7a8b9c0d7", name: "Sarah Johnson" },
   ];
 
   useEffect(() => {
@@ -313,33 +316,58 @@ const BookingFormModal = ({
       }}
     >
       <form onSubmit={handleBookingSubmit} className="flex flex-wrap gap-4">
-        <h2 className="text-lg font-bold mb-3">New Booking</h2>
+        <h2 className="text-lg font-bold mb-3 col-span-full">New Booking</h2>
 
         <div className="w-full p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Column 1 - Booking Info */}
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col">
+                <label className="font-semibold">Booking Date</label>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="border rounded p-2 w-full"
+                  required
+                />
+              </div>
 
-            <div className="flex flex-col">
-              <label className="font-semibold">Booking Date</label>
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="border rounded p-2 w-full md:w-44"
-                required
-              />
-              {/* Select Time */}
               <div className="flex flex-col">
                 <label className="font-semibold">Select Time</label>
                 <input
                   type="time"
                   value={selectedTime}
                   onChange={(e) => setSelectedTime(e.target.value)}
-                  className="border rounded p-2 w-full md:w-44"
+                  className="border rounded p-2 w-full"
                   required
                 />
               </div>
-              {/* Mobile Number */}
-              <div className="flex flex-col mb-3">
+
+              <div className="flex flex-col">
+                <label className="font-semibold">Customer Type</label>
+                <div className="flex space-x-4 mt-2">
+                  {["walkin", "appointment"].map((type) => (
+                    <label key={type} className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        name="customerType"
+                        value={type}
+                        checked={customerType === type}
+                        onChange={() => setCustomerType(type)}
+                        className="form-radio"
+                        required
+                      />
+                      <span className="capitalize">{type}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2 - Customer Info */}
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col">
                 <label className="font-semibold">Mobile Number</label>
                 <input
                   type="text"
@@ -351,29 +379,9 @@ const BookingFormModal = ({
                   required
                 />
               </div>
+
               <div className="flex flex-col">
-                <label className="font-semibold">Date Of Birth</label>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="border rounded p-2 w-full md:w-44"
-                  required
-                />
-              </div>{" "}
-              <div className="flex flex-col">
-                <label className="font-semibold">Anniversary Date</label>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="border rounded p-2 w-full md:w-44"
-                  required
-                />
-              </div>
-              {/* Name */}
-              <div className="flex flex-col mb-3">
-                <label className="font-semibold">Name</label>
+                <label className="font-semibold">First Name</label>
                 <input
                   type="text"
                   value={customerData.name}
@@ -388,8 +396,8 @@ const BookingFormModal = ({
                   required
                 />
               </div>
-              {/* Last Name */}
-              <div className="flex flex-col mb-3">
+
+              <div className="flex flex-col">
                 <label className="font-semibold">Last Name</label>
                 <input
                   type="text"
@@ -405,11 +413,13 @@ const BookingFormModal = ({
                   }`}
                   placeholder="Last Name"
                   readOnly={!isNewCustomer}
-                  required
                 />
               </div>
-              {/* Email */}
-              <div className="flex flex-col mb-3">
+            </div>
+
+            {/* Column 3 - Additional Info */}
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col">
                 <label className="font-semibold">Email</label>
                 <input
                   type="email"
@@ -425,14 +435,36 @@ const BookingFormModal = ({
                   }`}
                   placeholder="Customer Email"
                   readOnly={!isNewCustomer}
-                  required
                 />
               </div>
-              {/* Gender */}
-              <div className="flex flex-col mb-3">
+
+              <div className="flex flex-col">
+                <label className="font-semibold">Date Of Birth</label>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="border rounded p-2 w-full"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="font-semibold">Anniversary Date</label>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="border rounded p-2 w-full"
+                />
+              </div>
+            </div>
+
+            {/* Column 4 - Staff Info */}
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col">
                 <label className="font-semibold">Gender</label>
                 <div className="flex space-x-4 mt-2">
-                  {["Male", "Female", "Other"].map((g) => (
+                  {["Male", "Female"].map((g) => (
                     <label key={g} className="flex items-center space-x-2">
                       <input
                         type="radio"
@@ -454,27 +486,7 @@ const BookingFormModal = ({
                   ))}
                 </div>
               </div>
-              {/* Customer Type */}
-              <div className="flex flex-col">
-                <label className="font-semibold">Customer Type</label>
-                <div className="flex space-x-4 mt-2">
-                  {["walkin", "appointment"].map((type) => (
-                    <label key={type} className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        name="customerType"
-                        value={type}
-                        checked={customerType === type}
-                        onChange={() => setCustomerType(type)}
-                        className="form-radio"
-                        required
-                      />
-                      <span className="capitalize">{type}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-              {/* Staff Type */}
+
               <div className="flex flex-col">
                 <label className="font-semibold">Staff Type</label>
                 <div className="flex space-x-4 mt-2">
@@ -496,12 +508,13 @@ const BookingFormModal = ({
                   ))}
                 </div>
               </div>
+
               {/* Single Staff Selection */}
               {staffType === "single" && (
                 <div className="flex flex-col mt-2">
                   <label className="font-semibold">Select Staff</label>
                   <select
-                    className="border rounded p-2 w-full md:w-44"
+                    className="border rounded p-2 w-full"
                     value={selectedStaff[0] || ""}
                     onChange={(e) => setSelectedStaff([e.target.value])}
                     required
@@ -515,18 +528,18 @@ const BookingFormModal = ({
                   </select>
                 </div>
               )}
+
               {/* Multiple Staff Selection */}
               {staffType === "multiple" && (
                 <div className="flex flex-col mt-2">
                   <label className="font-semibold">Select Multiple Staff</label>
                   <div
-                    className="border rounded p-2 w-full md:w-44"
+                    className="border rounded p-2 w-full"
                     style={{
                       maxHeight: "100px",
                       overflowY: "auto",
                       border: "1px solid #ccc",
                       padding: "8px",
-                      width: "200px",
                     }}
                   >
                     {staffList.map((staff) => (
@@ -549,9 +562,8 @@ const BookingFormModal = ({
             </div>
           </div>
 
-          {/* Notes Section */}
+          {/* Notes Section - Below the 4 columns */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Appointment Note */}
             <div className="flex flex-col">
               <label className="font-semibold">Appointment Note</label>
               <textarea
@@ -562,7 +574,6 @@ const BookingFormModal = ({
               />
             </div>
 
-            {/* Client Note */}
             <div className="flex flex-col">
               <label className="font-semibold">Client Note</label>
               <textarea
@@ -643,7 +654,7 @@ const BookingFormModal = ({
         {/* Booking Summary */}
         {bookingSummary.length > 0 ? (
           <div className="w-full bg-gray-100 p-4 rounded-md shadow-md mb-4">
-            <h3 className="text-lg font-bold mb-2">Booking Summary</h3>
+            <h3 className="text-lg font-bold mb-2">Bookingg Summary</h3>
             <table className="w-full border-collapse border border-gray-300">
               <thead className="bg-gray-200">
                 <tr>
